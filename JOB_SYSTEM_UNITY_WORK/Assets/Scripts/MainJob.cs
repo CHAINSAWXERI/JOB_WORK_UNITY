@@ -11,6 +11,8 @@ public class MainJob : MonoBehaviour
     [SerializeField] public float speed;
     [SerializeField] public int spawnCount;
     [SerializeField] public float radius;
+    [SerializeField] private float interval;
+    private float timer = 0f;
 
     private Transform[] _transforms;
     private TransformAccessArray _transformAccessArray;
@@ -30,12 +32,28 @@ public class MainJob : MonoBehaviour
     private void Update()
     {
         HandleMovementJob();
+
+        timer += Time.deltaTime;
+
+        if (timer >= interval)
+        {
+            timer = 0f;
+            LogJob();
+        }
     }
 
     private void HandleMovementJob()
     {
         CyclicMovementJob movementJob = new CyclicMovementJob(speed, radius, Time.time);
         JobHandle jobHandle = movementJob.Schedule(_transformAccessArray);
+        jobHandle.Complete();
+    }
+
+    private void LogJob()
+    {
+        int rnd = Random.Range(1, 101);
+        Logar logarJob = new Logar(rnd);
+        JobHandle jobHandle = logarJob.Schedule();
         jobHandle.Complete();
     }
 

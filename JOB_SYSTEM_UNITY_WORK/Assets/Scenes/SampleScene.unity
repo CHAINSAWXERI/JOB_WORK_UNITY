@@ -372,6 +372,7 @@ MonoBehaviour:
   speed: 3
   spawnCount: 5
   radius: 5
+  interval: 5
 --- !u!4 &1965487435
 Transform:
   m_ObjectHideFlags: 0
